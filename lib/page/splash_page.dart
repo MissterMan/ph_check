@@ -25,38 +25,40 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: Image.asset('assets/splash_up.png'),
-          ),
-          Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/logo.png'),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Image.asset('assets/splash_up.png'),
+            ),
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/logo.png'),
+                      ),
                     ),
                   ),
-                ),
-                Text(
-                  'PhChecker',
-                  style: titleTextStyle,
-                ),
-              ],
+                  Text(
+                    'PhChecker',
+                    style: titleTextStyle,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Image.asset('assets/splash_down.png'),
-          ),
-        ],
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset('assets/splash_down.png'),
+            ),
+          ],
+        ),
       ),
     );
   }
