@@ -3,9 +3,15 @@ import 'package:ph_check/util/style.dart';
 import 'package:ph_check/widget/custom_container.dart';
 import 'package:ph_check/widget/custom_text_button.dart';
 
-class ContainerStatus extends StatelessWidget {
-  final bool status;
-  const ContainerStatus({super.key, required this.status});
+class ContainerStatus extends StatefulWidget {
+  const ContainerStatus({super.key});
+
+  @override
+  State<ContainerStatus> createState() => _ContainerStatusState();
+}
+
+class _ContainerStatusState extends State<ContainerStatus> {
+  bool status = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +40,11 @@ class ContainerStatus extends StatelessWidget {
               CustomTextButton(
                 title: status ? 'Matikan Perangkat' : 'Hidupkan Perangkat',
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    status = !status;
+                  });
+                },
               ),
             ],
           ),

@@ -5,8 +5,15 @@ import 'package:ph_check/widget/custom_container.dart';
 import 'package:ph_check/widget/custom_text_button.dart';
 import 'package:ph_check/widget/detail_data.dart';
 
-class ContainerData extends StatelessWidget {
+class ContainerData extends StatefulWidget {
   const ContainerData({super.key});
+
+  @override
+  State<ContainerData> createState() => _ContainerDataState();
+}
+
+class _ContainerDataState extends State<ContainerData> {
+  String dataType = 'month';
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +37,11 @@ class ContainerData extends StatelessWidget {
               SizedBox(
                 width: 150,
                 child: CustomTextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      dataType = 'week';
+                    });
+                  },
                   title: 'Minggu',
                   padding: const EdgeInsets.all(0),
                 ),
@@ -38,18 +49,24 @@ class ContainerData extends StatelessWidget {
               SizedBox(
                 width: 150,
                 child: CustomTextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      dataType = 'month';
+                    });
+                  },
                   title: 'Bulan',
                   padding: const EdgeInsets.all(0),
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Chart(),
-          SizedBox(
+          Chart(
+            dataType: dataType,
+          ),
+          const SizedBox(
             height: 10,
           ),
           const DetailData(

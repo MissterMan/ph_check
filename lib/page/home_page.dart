@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                ContainerStatus(status: true),
+                ContainerStatus(),
                 SizedBox(
                   height: 10,
                 ),

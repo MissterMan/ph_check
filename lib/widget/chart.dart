@@ -2,15 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ph_check/util/style.dart';
 
-class Chart extends StatefulWidget {
-  const Chart({super.key});
-
-  @override
-  State<Chart> createState() => _ChartState();
-}
-
-class _ChartState extends State<Chart> {
-  bool showAvg = true;
+class Chart extends StatelessWidget {
+  final String dataType;
+  const Chart({super.key, required this.dataType});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +15,7 @@ class _ChartState extends State<Chart> {
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: LineChart(
-              showAvg ? monthData() : weekData(),
+              dataType == 'month' ? monthData() : weekData(),
             ),
           ),
         ),
