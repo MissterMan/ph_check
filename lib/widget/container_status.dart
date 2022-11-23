@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ph_check/util/style.dart';
 import 'package:ph_check/widget/custom_container.dart';
 import 'package:ph_check/widget/custom_text_button.dart';
@@ -45,7 +46,16 @@ class ContainerStatus extends StatelessWidget {
               CustomTextButton(
                 title: deviceState ? 'Matikan Perangkat' : 'Hidupkan Perangkat',
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        backgroundColor: redLight,
+                        content: Text(
+                          'Mohon maaf 😢 Fitur sedang dalam pengembangan.',
+                          style: normalTextStyle,
+                        )),
+                  );
+                },
               ),
             ],
           ),
