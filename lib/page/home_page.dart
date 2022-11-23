@@ -50,6 +50,7 @@ class HomePage extends StatelessWidget {
                         height: 10,
                       ),
                       ContainerData(
+                        deviceState: value.device.deviceState,
                         ph: value.device.ph,
                         waterStatus: value.device.waterStatus,
                       ),

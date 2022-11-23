@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:ph_check/page/home_page.dart';
 import 'package:ph_check/util/style.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -16,22 +18,36 @@ class CustomAppBar extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: 45,
-            height: 45,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/logo.png'),
+          Row(
+            children: [
+              Container(
+                width: 45,
+                height: 45,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/logo.png'),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                'PhChecker',
+                style: headline1TextStyle,
+              ),
+            ],
           ),
-          const SizedBox(
-            width: 5,
-          ),
-          Text(
-            'PhChecker',
-            style: headline1TextStyle,
+          IconButton(
+            color: blueDark,
+            iconSize: 30,
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, HomePage.routeName, (route) => false);
+            },
+            icon: const Icon(Icons.refresh),
           ),
         ],
       ),
