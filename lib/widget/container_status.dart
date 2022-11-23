@@ -3,15 +3,18 @@ import 'package:ph_check/util/style.dart';
 import 'package:ph_check/widget/custom_container.dart';
 import 'package:ph_check/widget/custom_text_button.dart';
 
-class ContainerStatus extends StatefulWidget {
-  const ContainerStatus({super.key});
-
-  @override
-  State<ContainerStatus> createState() => _ContainerStatusState();
-}
-
-class _ContainerStatusState extends State<ContainerStatus> {
-  bool status = false;
+class ContainerStatus extends StatelessWidget {
+  final bool deviceState;
+  final double voltage;
+  final String waterStatus;
+  final int ph;
+  const ContainerStatus({
+    super.key,
+    required this.deviceState,
+    required this.voltage,
+    required this.waterStatus,
+    required this.ph,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,22 +32,24 @@ class _ContainerStatusState extends State<ContainerStatus> {
                 ),
               ),
               Text(
-                'Status : ${status ? 'Hidup' : 'Mati'}',
+                'Status : ${deviceState ? 'Hidup' : 'Mati'}',
+                style: normalTextStyle.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                'Voltage : ${deviceState ? voltage.toString() : '-'}',
                 style: normalTextStyle.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
               ),
               const SizedBox(
-                height: 70,
+                height: 60,
               ),
               CustomTextButton(
-                title: status ? 'Matikan Perangkat' : 'Hidupkan Perangkat',
+                title: deviceState ? 'Matikan Perangkat' : 'Hidupkan Perangkat',
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                onPressed: () {
-                  setState(() {
-                    status = !status;
-                  });
-                },
+                onPressed: () {},
               ),
             ],
           ),
@@ -54,8 +59,8 @@ class _ContainerStatusState extends State<ContainerStatus> {
               height: 100,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image:
-                      AssetImage(status ? 'assets/on.gif' : 'assets/sleep.gif'),
+                  image: AssetImage(
+                      deviceState ? 'assets/on.gif' : 'assets/sleep.gif'),
                 ),
               ),
             ),
