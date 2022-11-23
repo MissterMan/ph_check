@@ -6,14 +6,10 @@ import 'package:ph_check/widget/custom_text_button.dart';
 class ContainerStatus extends StatelessWidget {
   final bool deviceState;
   final double voltage;
-  final String waterStatus;
-  final int ph;
   const ContainerStatus({
     super.key,
     required this.deviceState,
     required this.voltage,
-    required this.waterStatus,
-    required this.ph,
   });
 
   @override

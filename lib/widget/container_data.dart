@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:ph_check/util/style.dart';
-import 'package:ph_check/widget/chart.dart';
 import 'package:ph_check/widget/custom_container.dart';
-import 'package:ph_check/widget/custom_text_button.dart';
-import 'package:ph_check/widget/detail_data.dart';
 
-class ContainerData extends StatefulWidget {
-  const ContainerData({super.key});
-
-  @override
-  State<ContainerData> createState() => _ContainerDataState();
-}
-
-class _ContainerDataState extends State<ContainerData> {
-  String dataType = 'month';
+class ContainerData extends StatelessWidget {
+  final int ph;
+  final String waterStatus;
+  const ContainerData({super.key, required this.ph, required this.waterStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -31,49 +24,57 @@ class _ContainerDataState extends State<ContainerData> {
             color: blueLight,
             thickness: 2,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                width: 150,
-                child: CustomTextButton(
-                  onPressed: () {
-                    setState(() {
-                      dataType = 'week';
-                    });
-                  },
-                  title: 'Minggu',
-                  padding: const EdgeInsets.all(0),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CircularPercentIndicator(
+                  animation: true,
+                  animationDuration: 1000,
+                  footer: Text(
+                    'Ph',
+                    style: normalTextStyle.copyWith(
+                      fontSize: 25,
+                    ),
+                  ),
+                  radius: 60.0,
+                  lineWidth: 10.0,
+                  percent: ph / 14,
+                  center: Text(
+                    ph.toString(),
+                    style: normalTextStyle.copyWith(
+                      fontSize: 45,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  progressColor: blueDark,
+                  backgroundColor: blueLight,
                 ),
-              ),
-              SizedBox(
-                width: 150,
-                child: CustomTextButton(
-                  onPressed: () {
-                    setState(() {
-                      dataType = 'month';
-                    });
-                  },
-                  title: 'Bulan',
-                  padding: const EdgeInsets.all(0),
+                CircularPercentIndicator(
+                  animation: true,
+                  animationDuration: 1000,
+                  footer: Text(
+                    'Level',
+                    style: normalTextStyle.copyWith(
+                      fontSize: 25,
+                    ),
+                  ),
+                  radius: 60.0,
+                  lineWidth: 10.0,
+                  percent: 1,
+                  center: Text(
+                    waterStatus,
+                    style: normalTextStyle.copyWith(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  progressColor:
+                      waterStatus == "Normal" ? greenLight : redLight,
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Chart(
-            dataType: dataType,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const DetailData(
-            average: '7',
-            max: '7',
-            min: '7',
-            status: 'Aman',
+              ],
+            ),
           ),
         ],
       ),

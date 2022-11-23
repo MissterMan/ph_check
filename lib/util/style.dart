@@ -18,6 +18,7 @@ const Color blueLight = Color(0xFF81c6e8);
 const Color blueDark = Color(0xFF47b5ff);
 const Color blueShadow = Color(0xFFC1E7F5);
 const Color greenLight = Color(0xFF43FF78);
+const Color redLight = Color(0xFFFF4343);
 const Color black = Color(0xFF000000);
 const Color white = Color(0xFFFFFFFF);
 
