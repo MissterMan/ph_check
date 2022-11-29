@@ -2,7 +2,7 @@ class Device {
   final bool deviceState;
   final double voltage;
   final String waterStatus;
-  final int ph;
+  final double ph;
 
   Device(
     this.deviceState,
@@ -15,7 +15,7 @@ class Device {
     bool? deviceState,
     double? voltage,
     String? waterStatus,
-    int? ph,
+    double? ph,
   }) {
     return Device(
       deviceState ?? this.deviceState,

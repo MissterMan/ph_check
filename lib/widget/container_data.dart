@@ -5,7 +5,7 @@ import 'package:ph_check/widget/custom_container.dart';
 
 class ContainerData extends StatelessWidget {
   final bool deviceState;
-  final int ph;
+  final double ph;
   final String waterStatus;
   const ContainerData({
     super.key,
