@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ph_check/page/home_page.dart';
 import 'package:ph_check/page/splash_page.dart';
-import 'package:ph_check/provider/device_bloc/device_bloc.dart';
 import 'package:provider/provider.dart';
 
+import 'bloc/device_bloc/device_bloc.dart';
 import 'data/api_service.dart';
 
 

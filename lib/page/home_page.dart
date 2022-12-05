@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:ph_check/provider/device_bloc/device_bloc.dart';
 import 'package:ph_check/util/style.dart';
 import 'package:ph_check/widget/container_data.dart';
 import 'package:ph_check/widget/container_status.dart';
 import 'package:ph_check/widget/custom_appbar.dart';
+
+import '../bloc/device_bloc/device_bloc.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
