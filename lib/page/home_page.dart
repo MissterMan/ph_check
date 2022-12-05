@@ -1,65 +1,98 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:ph_check/data/api_service.dart';
-import 'package:ph_check/provider/device_provider.dart';
+import 'package:ph_check/provider/device_bloc/device_bloc.dart';
 import 'package:ph_check/util/style.dart';
 import 'package:ph_check/widget/container_data.dart';
 import 'package:ph_check/widget/container_status.dart';
 import 'package:ph_check/widget/custom_appbar.dart';
-import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
+
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      BlocProvider.of<DeviceBloc>(context, listen: false)
+          .add(FetchDataDevice());
+      Timer.periodic(new Duration(seconds: 15), (timer) {
+        BlocProvider.of<DeviceBloc>(context, listen: false)
+            .add(FetchDataDevice());
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<DeviceProvider>(
-      create: (_) => DeviceProvider(apiService: ApiService()),
-      child: Scaffold(
+    return  Scaffold(
         body: SafeArea(
-          child: Consumer<DeviceProvider>(builder: (context, value, child) {
-            if (value.state == ResultState.loading) {
+          child:
+              BlocBuilder<DeviceBloc, DeviceState>(builder: (context, state) {
+            if (state is DeviceLoading) {
               return Center(
                   child: LoadingAnimationWidget.inkDrop(
                 color: blueLight,
                 size: 50,
               ));
-            } else if (value.state == ResultState.error) {
+            } else if (state is DeviceError) {
               return Center(
                 child: Text(
-                  value.message,
+                  state.message,
                   style: headline2TextStyle,
                 ),
               );
+            } else if (state is DeviceHasData) {
+              return DeviceContent(state: state);
             } else {
-              return SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      const CustomAppBar(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ContainerStatus(
-                        deviceState: value.device.deviceState,
-                        voltage: value.device.voltage,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ContainerData(
-                        deviceState: value.device.deviceState,
-                        ph: value.device.ph,
-                        waterStatus: value.device.waterStatus,
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              return Container();
             }
           }),
+        ),
+      );
+  }
+
+
+}
+
+class DeviceContent extends StatelessWidget {
+  final DeviceHasData state;
+  const DeviceContent({super.key, value, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const CustomAppBar(),
+            const SizedBox(
+              height: 10,
+            ),
+            ContainerStatus(
+              deviceState: state.result.deviceState,
+              voltage: state.result.voltage,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ContainerData(
+              deviceState: state.result.deviceState,
+              ph: state.result.ph,
+              waterStatus: state.result.waterStatus,
+            ),
+          ],
         ),
       ),
     );
