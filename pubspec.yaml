@@ -41,6 +41,8 @@ dependencies:
   google_fonts: ^3.0.1
   percent_indicator: ^4.2.2
   loading_animation_widget: ^1.2.0+3
+  flutter_bloc: ^7.3.0
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
