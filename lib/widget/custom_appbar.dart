@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ph_check/page/home_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ph_check/util/style.dart';
+import 'package:popover/popover.dart';
+
+
+import '../bloc/device_bloc/device_bloc.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
@@ -43,12 +47,99 @@ class CustomAppBar extends StatelessWidget {
             color: blueDark,
             iconSize: 30,
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, HomePage.routeName, (route) => false);
+              showPopover(
+                context: context,
+                bodyBuilder: (context) => const ListItems(),
+                onPop: () => print('Popover was popped!'),
+                direction: PopoverDirection.bottom,
+                arrowDxOffset: 150,
+                width: 200,
+                height: 150,
+                arrowHeight: 15,
+                arrowWidth: 30,
+
+              );
             },
             icon: const Icon(Icons.refresh),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ListItems extends StatelessWidget {
+  const ListItems({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: ListView(
+          padding: const EdgeInsets.all(8),
+          children: [
+            InkWell(
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      backgroundColor: greenLight,
+                      content: Text(
+                        '🕑 Auto Reload Active Every 15 Seconds.',
+                        style: normalTextStyle,
+                      )),
+                );
+
+                BlocProvider.of<DeviceBloc>(context, listen: false)
+                    .add(ToggleAutoReload(isAutoReload: true));
+
+              },
+              child: Container(
+                height: 50,
+                color: Colors.blue[100],
+                child:  Center(child: Text('On Auto Reload', style: normalTextStyle,)),
+              ),
+            ),
+            const Divider(),
+            InkWell(
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      backgroundColor: redLight,
+                      content: Text(
+                        'Off Auto Reload',
+                        style: normalTextStyle,
+                      )),
+                );
+                BlocProvider.of<DeviceBloc>(context, listen: false)
+                    .add(ToggleAutoReload(isAutoReload: false));
+              }, child: Container(
+                height: 50,
+                color: Colors.blue[200],
+                child:  Center(child: Text('Off',style: normalTextStyle,)),
+              ),
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Go back!'),
+        ),
       ),
     );
   }

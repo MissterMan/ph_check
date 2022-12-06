@@ -12,8 +12,8 @@ import '../bloc/device_bloc/device_bloc.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
-
-  const HomePage({super.key});
+  Timer? timer = null;
+  HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,15 +27,13 @@ class _HomePageState extends State<HomePage> {
     Future.microtask(() {
       BlocProvider.of<DeviceBloc>(context, listen: false)
           .add(FetchDataDevice());
-      Timer.periodic(new Duration(seconds: 15), (timer) {
-        BlocProvider.of<DeviceBloc>(context, listen: false)
-            .add(FetchDataDevice());
-      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    widget.timer?.cancel();
+    autoReload(context);
     return  Scaffold(
         body: SafeArea(
           child:
@@ -61,6 +59,19 @@ class _HomePageState extends State<HomePage> {
           }),
         ),
       );
+  }
+
+  void autoReload(BuildContext context) {
+    bool toogleAutoReload = context.watch<DeviceBloc>().isAutoReload;
+    // print(toogleAutoReload);
+    if(toogleAutoReload){
+      Future.microtask(() {
+        widget.timer = Timer.periodic(new Duration(seconds: 15), (timer) {
+          BlocProvider.of<DeviceBloc>(context, listen: false)
+              .add(FetchDataDevice());
+        });
+      });
+    }
   }
 
 
